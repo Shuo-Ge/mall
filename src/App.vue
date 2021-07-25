@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view></router-view>
-    <Maintabbar></Maintabbar>
+    <Maintabbar class="mainbbar"></Maintabbar>
   </div>
 </template>
 
@@ -17,4 +17,7 @@ export default {
 
 <style>
 @import "./assets/css/base.css";
+.mainbbar {
+  z-index: 999;
+}
 </style>
