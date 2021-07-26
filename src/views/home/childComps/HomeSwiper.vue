@@ -1,6 +1,6 @@
 <template>
   <Swiper>
-    <SwiperItem v-for="(item, index) in banners" :key="index">
+    <SwiperItem v-for="(item, index) in banners" :key="index" @load="imageLoad">
       <a :href="item.link">
         <img :src="item.image" alt="" />
       </a>
@@ -17,6 +17,11 @@ export default {
       default() {
         return [];
       },
+    },
+  },
+  methods: {
+    imageLoad() {
+      this.$emit("swiperImageLoad");
     },
   },
   components: {

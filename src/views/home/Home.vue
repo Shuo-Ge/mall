@@ -9,13 +9,17 @@
       @scroll="contenscroll"
       @pullingUp="loadmore"
     >
-      <HomeSwiper :banners="banners"></HomeSwiper>
+      <HomeSwiper
+        :banners="banners"
+        @swiperImageLoad="swiperImageLoad"
+      ></HomeSwiper>
       <RecommendView :recommends="recommends"></RecommendView>
       <FeatureViews></FeatureViews>
       <TabControl
         class="tabcontrol"
         :titles="['流行', '新款', '精选']"
         @tabclick="tabclick"
+        ref="tabcontrol"
       ></TabControl>
       <GoodsList :goods="showGoods"></GoodsList>
     </Scroll>
@@ -48,6 +52,7 @@ export default {
       },
       currentType: "pop",
       isShow: false,
+      SaveY: 0,
     };
   },
   components: {
@@ -68,13 +73,35 @@ export default {
     this.getHomeGoods("new");
     this.getHomeGoods("sell");
   },
+  activated() {
+    this.$refs.scroll.scrollTo(0, this.SaveY, 0);
+    this.$refs.scroll.scroll.refresh;
+  },
+  deactivated() {
+    this.SaveY = this.$refs.scroll.getScrollY();
+  },
   computed: {
     showGoods() {
       return this.goods[this.currentType].list;
     },
   },
+  mounted() {
+    // 获取tabcontrol的offsetTop
+    // 所有的组件都有一个属性。用于获取组件中的元素
+  },
   methods: {
     // 事件监听
+    debounce(func, delay) {
+      let timer = null;
+      return function (...args) {
+        if (timer) clearTimeout(timer);
+
+        timer = setTimeout(() => {
+          func.apply(this, args);
+        }, delay);
+      };
+    },
+
     tabclick(index) {
       switch (index) {
         case 0:
@@ -97,6 +124,9 @@ export default {
     loadmore() {
       this.getHomeGoods(this.currentType);
     },
+    swiperImageLoad() {
+      this.tabcontrol = this.$refs.tabcontrol.$el.offsetTop;
+    },
 
     // 网络请求
     getHomeMultidata() {
@@ -108,7 +138,7 @@ export default {
     getHomeGoods(type) {
       const page = this.goods[type].page + 1;
       getHomeGoods(type, page).then((res) => {
-        console.log(res);
+        // console.log(res);
         this.goods[type].list.push(...res.data.list);
         this.goods[type].page += 1;
 
@@ -136,8 +166,6 @@ export default {
   z-index: 9;
 }
 .tabcontrol {
-  position: sticky;
-  top: 44px;
   z-index: 9;
 }
 .content {
