@@ -1,6 +1,9 @@
 <template>
   <div class="detileComps">
     <NavBar>
+      <div slot="left" class="back" @click="backclcik">
+        <img src="~assets/img/common/back.svg" alt="" />
+      </div>
       <div slot="center" class="title">
         <div
           class="title-item"
@@ -18,6 +21,7 @@
 
 <script>
 import NavBar from "components/common/navbar/NavBar";
+
 export default {
   components: {
     NavBar,
@@ -31,6 +35,9 @@ export default {
   methods: {
     itemclick(index) {
       this.currentIndex = index;
+    },
+    backclcik() {
+      this.$router.go(-1);
     },
   },
 };
@@ -46,6 +53,9 @@ export default {
 }
 .active {
   color: var(--color-high-text);
+}
+.back img {
+  margin-top: 12px;
 }
 </style>>
 

@@ -39,7 +39,8 @@ const routes = [
 ]
 const router = new VueRouter({
     routes,
-    mode: 'history'
+    mode: 'history',
+    // meta: { footShow: true }
 
 })
 export default router

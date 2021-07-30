@@ -1,5 +1,5 @@
 <template>
-  <div class="tab-bat-item" @click="clickitem">
+  <div class="tab-bat-item" @click="clickitem" v-if="isshow">
     <div v-if="!isActivity"><slot name="item-icon"></slot></div>
     <div v-else><slot name="item-icon-activity"></slot></div>
     <div :style="activeStyle"><slot name="item-text"></slot></div>
@@ -16,7 +16,9 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      isshow: true,
+    };
   },
   computed: {
     isActivity() {

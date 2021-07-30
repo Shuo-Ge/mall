@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <keep-alive> <router-view></router-view> </keep-alive>
-    <Maintabbar class="mainbbar"></Maintabbar>
+    <keep-alive exclude="Detile">
+      <router-view></router-view>
+    </keep-alive>
+    <Maintabbar></Maintabbar>
   </div>
 </template>
 
@@ -17,7 +19,4 @@ export default {
 
 <style>
 @import "./assets/css/base.css";
-.mainbbar {
-  z-index: 999;
-}
 </style>
