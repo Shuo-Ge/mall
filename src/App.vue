@@ -3,7 +3,7 @@
     <keep-alive exclude="Detile">
       <router-view></router-view>
     </keep-alive>
-    <Maintabbar></Maintabbar>
+    <Maintabbar class="tabbar"></Maintabbar>
   </div>
 </template>
 
